@@ -24,15 +24,21 @@ jobs:
     - name: Install tools
       run: dotnet tool install --global vpk
 
-    - name: Build Core.Windows
-      run: dotnet build src/Plpext.Core.Windows/Plpext.Core.Windows.csproj --configuration Release --no-restore
-
     - name: Build UI
       run: dotnet build src/Plpext/Plpext.UI/Plpext.UI.csproj --configuration Release --no-restore
 
     - name: Dotnet publish
       run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
 
+    - name: Copy OpenAL32.dll
+      run: |
+        Copy-Item -Path "src\Plpext\Plpext.Core.Windows\lib\x64\OpenAL32.dll" -Destination "publish\OpenAL32.dll" -Force
+        if (Test-Path "publish\OpenAL32.dll") {
+          Write-Host "OpenAL32.dll successfully copied to publish folder"
+        } else {
+          Write-Error "Failed to copy OpenAL32.dll"
+          exit 1
+        }
     - name: Vpk pack
       run: vpk pack --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.${{ github.run_number }} --packDir=publish -o build/win
     
