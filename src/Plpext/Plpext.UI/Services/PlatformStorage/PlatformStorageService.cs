@@ -1,9 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 
@@ -21,12 +18,12 @@ namespace Plpext.UI.Services.PlatformStorage
             {
                 AllowMultiple = false,
                 Title = "Select Plus Library Pack",
-                FileTypeFilter = [new ("Plus Library Pack"){Patterns = ["*.plp"]}],
+                FileTypeFilter = [new("Plus Library Pack") { Patterns = ["*.plp"] }],
             });
 
             return filePath.Any() ? filePath[0].Path.AbsolutePath : string.Empty;
         }
-        
+
         public async Task<string> GetTargetFolderPath()
         {
             if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||

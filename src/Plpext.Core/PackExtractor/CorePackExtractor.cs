@@ -1,10 +1,5 @@
 ﻿using Plpext.Core.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plpext.Core.PackExtractor
 {
@@ -13,24 +8,16 @@ namespace Plpext.Core.PackExtractor
         private static readonly byte[] filePattern = { 0x53, 0x4E, 0x44, 0x55, 0x00 };
         public async Task<IEnumerable<ReadOnlyMemory<byte>>> GetFileListAsync(string filePath, CancellationToken cancellationToken)
         {
-            try
-            {
-                ReadOnlyMemory<byte> file = await File.ReadAllBytesAsync(filePath, cancellationToken);
-                var fileIndexes = FindFileIndexes(file.Span);
+            ReadOnlyMemory<byte> file = await File.ReadAllBytesAsync(filePath, cancellationToken);
+            var fileIndexes = FindFileIndexes(file.Span);
 
-                var result = new List<ReadOnlyMemory<byte>>();
-                for(int i = 0; i < fileIndexes.Count - 1; ++i)
-                {
-                    var nextFile = file.Slice(start: fileIndexes[i], length: fileIndexes[i + 1] - fileIndexes[i]);
-                    result.Add(nextFile);
-                }
-                return result;
-            }
-            catch(Exception e)
+            var result = new List<ReadOnlyMemory<byte>>();
+            for (int i = 0; i < fileIndexes.Count - 1; ++i)
             {
-                Debug.WriteLine(e);
-                throw;
+                var nextFile = file.Slice(start: fileIndexes[i], length: fileIndexes[i + 1] - fileIndexes[i]);
+                result.Add(nextFile);
             }
+            return result;
         }
 
         private static List<int> FindFileIndexes(ReadOnlySpan<byte> file)
@@ -54,7 +41,9 @@ namespace Plpext.Core.PackExtractor
                     idx += filePattern.Length;
                 }
                 else
+                {
                     idx += skipTable[file[idx + j]];
+                }
             }
             result.Add(file.Length - 1);
             return result;

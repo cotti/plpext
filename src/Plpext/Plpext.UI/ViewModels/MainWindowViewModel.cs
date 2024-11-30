@@ -18,7 +18,9 @@ public partial class MainWindowViewModel : ViewModelBase
     {
     }
 
-    public MainWindowViewModel(IPlatformStorageService platformStorageService, IFileLoaderService fileLoaderService,
+    public MainWindowViewModel(
+        IPlatformStorageService platformStorageService, 
+        IFileLoaderService fileLoaderService,
         IConvertService convertService)
     {
         _fileLoaderService = fileLoaderService;
@@ -26,30 +28,43 @@ public partial class MainWindowViewModel : ViewModelBase
         _convertService = convertService;
     }
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(LoadFileCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(LoadFileCommand))]
     private string _originPath = null!;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand),nameof(ConvertSelectedFilesCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand), nameof(ConvertSelectedFilesCommand))]
     private string _targetPath = null!;
 
-    [ObservableProperty] private int _totalFilesToExtract;
+    [ObservableProperty]
+    private int _totalFilesToExtract;
 
-    [ObservableProperty] private int _filesReady;
+    [ObservableProperty]
+    private int _filesReady;
 
-    [ObservableProperty] private string _progressBarText = null!;
+    [ObservableProperty]
+    private string _progressBarText = null!;
 
-    [ObservableProperty] private double _progressBarValue;
+    [ObservableProperty]
+    private double _progressBarValue;
 
-    [ObservableProperty] private bool _isProgressBarIndeterminate;
+    [ObservableProperty]
+    private bool _isProgressBarIndeterminate;
 
-    [ObservableProperty] private string _progressBarDetails = null!;
+    [ObservableProperty]
+    private string _progressBarDetails = null!;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand), nameof(ConvertSelectedFilesCommand), nameof(LoadFileCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand), nameof(ConvertSelectedFilesCommand), nameof(LoadFileCommand))]
     private bool _showProgressBar;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand),nameof(ConvertSelectedFilesCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ConvertAllFilesCommand), nameof(ConvertSelectedFilesCommand))]
     private ObservableCollection<AudioPlayerViewModel> _audioFiles = new();
 
+    private bool CanLoadFile() => !string.IsNullOrEmpty(OriginPath) && !ShowProgressBar;
+    private bool CanConvertAllFiles() => !string.IsNullOrEmpty(TargetPath) && AudioFiles.Any() && !ShowProgressBar;
+    private bool CanConvertSelectFiles() => CanConvertAllFiles();
 
     [RelayCommand(CanExecute = nameof(CanLoadFile))]
     private async Task LoadFile()
@@ -79,9 +94,6 @@ public partial class MainWindowViewModel : ViewModelBase
         await Dispatcher.UIThread.InvokeAsync(() => ShowProgressBar = false);
     }
 
-    private bool CanLoadFile() => !string.IsNullOrEmpty(OriginPath) && !ShowProgressBar;
-
-
     [RelayCommand]
     private async Task SelectOriginPath()
     {
@@ -107,10 +119,6 @@ public partial class MainWindowViewModel : ViewModelBase
         await _convertService.ConvertFilesAsync(AudioFiles.Select(x => x.AudioFile), TargetPath);
         await Dispatcher.UIThread.InvokeAsync(() => ShowProgressBar = false);
     }
-
-    private bool CanConvertAllFiles() => !string.IsNullOrEmpty(TargetPath) && AudioFiles.Any() && !ShowProgressBar;
-    private bool CanConvertSelectFiles() => CanConvertAllFiles();
-
 
     [RelayCommand(CanExecute = nameof(CanConvertSelectFiles))]
     private async Task ConvertSelectedFiles()

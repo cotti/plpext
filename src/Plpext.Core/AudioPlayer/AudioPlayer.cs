@@ -1,13 +1,6 @@
 ﻿using OpenTK.Audio.OpenAL;
 using Plpext.Core.Interfaces;
 using Plpext.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Plpext.Core.AudioPlayer;
 
@@ -35,19 +28,18 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
         {
             int bufferId = AL.GenBuffer();
             int sourceId = AL.GenSource();
-            
+
             _currentBufferId = bufferId;
             _currentSourceId = sourceId;
 
             AL.BufferData(bufferId, ALFormat.Mono16, input.Data.Span, input.Frequency);
             AL.Source(sourceId, ALSourcei.Buffer, bufferId);
-            if(autoStart)
+            if (autoStart)
                 return await Start();
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"init error: {ex}");
             await CleanupPlaybackResources();
             return false;
         }
@@ -63,7 +55,6 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
             while (!cancellationToken.IsCancellationRequested)
             {
                 var sourceState = (ALSourceState)AL.GetSource(_currentSourceId.Value, ALGetSourcei.SourceState);
-                Console.WriteLine($"source state: {sourceState}");
                 if (sourceState == ALSourceState.Stopped)
                     break;
                 if (State != PlaybackState.Paused)
@@ -72,8 +63,6 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
                     var currentPosition = TimeSpan.FromSeconds(
                         ((double)(_audioFile.Data.Length - (_audioFile.Data.Length - bytesPlayed)) / 2) / _audioFile.Frequency
                     );
-
-                    Console.WriteLine($"Progress: {currentPosition.TotalSeconds:F2}s / {_audioFile.Duration.TotalSeconds:F2}s");
 
                     OnProgressUpdated?.Invoke(this, new()
                     {
@@ -86,15 +75,14 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
         }
         catch (OperationCanceledException)
         {
-            Console.WriteLine("Playback cancelled");
+            //An operation cancelled here is expected behavior.
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Monitor error: {ex}");
+            //There is little to be done if we get any other exception during monitoring. Finish up playback monitoring.
         }
         finally
         {
-            Console.WriteLine("Monitor task ending");
             OnProgressUpdated?.Invoke(this, new()
             {
                 CurrentPosition = _audioFile.Duration,
@@ -108,9 +96,9 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
     {
         lock (_lock)
         {
+            //If we try and start/resume playback without a proper source id or audio file, we can't go on.
             if (_currentSourceId == null || _audioFile == null)
             {
-                Console.WriteLine("Cannot start - no source or audio file");
                 return Task.FromResult(false);
             }
 
@@ -137,16 +125,13 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
                 State = PlaybackState.Playing;
                 OnPlaybackStarted?.Invoke(this, new PlaybackStartedEventArgs { AudioFile = _audioFile });
 
-                Console.WriteLine($"Rewind");
                 AL.SourceRewind(_currentSourceId.Value);
-                Console.WriteLine($"Play");
                 AL.SourcePlay(_currentSourceId.Value);
                 _playbackTask = Task.Run(() => MonitorPlaybackAsync(_playbackCts.Token));
                 return Task.FromResult(true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Start error: {ex}");
                 return Task.FromResult(false);
             }
         }
@@ -177,7 +162,6 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
 
     public void Stop()
     {
-        Console.WriteLine($"STOP called");
         lock (_lock)
         {
             _playbackCts?.Cancel();
@@ -190,7 +174,8 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
             _playbackCts?.Cancel();
             State = PlaybackState.Stopped;
         }
-        OnPlaybackStopped?.Invoke(this, new() { AudioFile = _audioFile });
+        if(_audioFile is not null)
+            OnPlaybackStopped?.Invoke(this, new() { AudioFile = _audioFile });
     }
 
     private Task CleanupPlaybackResources()
@@ -209,9 +194,9 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
                 _currentBufferId = null;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error during cleanup: {ex}");
+            //Things might be pretty broken at this point if this exception pops.
         }
         return Task.CompletedTask;
     }

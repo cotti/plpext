@@ -1,20 +1,21 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="Plpext.UI.App"
-             RequestedThemeVariant="Dark">
-             
+<Application
+    x:Class="Plpext.UI.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    RequestedThemeVariant="Dark">
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://Plpext/Resources/Colors.axaml"/>
-                <ResourceInclude Source="avares://Plpext/Controls/AudioPlayerControl.axaml"/>
+                <ResourceInclude Source="avares://Plpext/Resources/Colors.axaml" />
+                <ResourceInclude Source="avares://Plpext/Controls/AudioPlayerControl.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-  
+
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
-        <StyleInclude Source="avares://Plpext/Styles/AudioPlayerControl.axaml"/>
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <StyleInclude Source="avares://Plpext/Styles/AudioPlayerControl.axaml" />
     </Application.Styles>
 </Application>

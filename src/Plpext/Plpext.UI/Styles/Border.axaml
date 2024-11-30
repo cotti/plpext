@@ -1,15 +1,17 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
-            <!-- Add Controls for Previewer Here -->
+            <Border
+                Width="100"
+                Height="100"
+                Classes="Section" />
         </Border>
     </Design.PreviewWith>
-    
+
     <Style Selector="Border.Section">
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryForeground}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BoxShadow" Value="0 0 1 1 Black"/>
-        <Setter Property="CornerRadius" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryForeground}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BoxShadow" Value="0 0 1 1 Black" />
+        <Setter Property="CornerRadius" Value="1" />
     </Style>
 </Styles>

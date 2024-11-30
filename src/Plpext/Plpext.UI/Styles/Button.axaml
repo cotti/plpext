@@ -1,30 +1,32 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
             <StackPanel>
                 <Button Classes="Primary" Content="Primary Button" />
-                <Button IsEnabled="False" Classes="Primary" Content="Primary Button" />
-            </StackPanel>            <!-- Add Controls for Previewer Here -->
+                <Button
+                    Classes="Primary"
+                    Content="Primary Button"
+                    IsEnabled="False" />
+            </StackPanel>
         </Border>
     </Design.PreviewWith>
-    
+
     <Style Selector="Button.Primary">
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource SecondaryDarkestBrush}"/>
-        <Setter Property="Padding" Value="8 12 8 12"/>
-        <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="Margin" Value="2"/>
-        <Setter Property="Background" Value="{StaticResource SecondaryDark}"/>
-        <Setter Property="Foreground" Value="{StaticResource SecondaryLightest}"/>
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource SecondaryDarkestBrush}" />
+        <Setter Property="Padding" Value="8 12 8 12" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="Background" Value="{StaticResource SecondaryDark}" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryLightest}" />
     </Style>
     <Style Selector="Button.Primary:disabled /template/ ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource SecondaryDarkest}"/>
-        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Background" Value="{StaticResource SecondaryDarkest}" />
+        <Setter Property="Foreground" Value="Gray" />
     </Style>
     <Style Selector="Button.Primary:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="{StaticResource SecondaryLightest}"/>
-        <Setter Property="Foreground" Value="{StaticResource SecondaryDarkest}"/>
+        <Setter Property="Background" Value="{StaticResource SecondaryLightest}" />
+        <Setter Property="Foreground" Value="{StaticResource SecondaryDarkest}" />
     </Style>
 
 </Styles>

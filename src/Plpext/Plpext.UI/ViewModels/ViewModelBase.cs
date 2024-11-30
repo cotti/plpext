@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Plpext.UI.ViewModels
+namespace Plpext.UI.ViewModels;
+
+public class ViewModelBase : ObservableObject
 {
-    public class ViewModelBase : ObservableObject
-    {
-    }
 }

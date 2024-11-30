@@ -12,10 +12,16 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
 
-  
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaResource Remove="ViewModels\Mocks\**" />
   </ItemGroup>
@@ -45,15 +51,21 @@
 
   <ItemGroup>
     <Compile Remove="ViewModels\Mocks\MockAudioPlayerViewModel.cs" />
+    <Compile Remove="publish\**" />
+    <Compile Remove="Releases\**" />
     <Compile Remove="ViewModels\Mocks\**" />
     <Compile Remove="ViewLocator.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <AvaloniaXaml Remove="publish\**" />
+    <AvaloniaXaml Remove="Releases\**" />
     <AvaloniaXaml Remove="ViewModels\Mocks\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="publish\**" />
+    <EmbeddedResource Remove="Releases\**" />
     <EmbeddedResource Remove="ViewModels\Mocks\**" />
   </ItemGroup>
 
@@ -62,13 +74,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="publish\**" />
+    <None Remove="Releases\**" />
     <None Remove="ViewModels\Mocks\**" />
   </ItemGroup>
 
 <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x86'">
-    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'" />
-    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
+  <ItemGroup>
+    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86' or '$(PlatformTarget)' == 'x86'" />
+    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64' or '$(PlatformTarget)' == 'x64'" />
   </ItemGroup>
   <Copy SourceFiles="@(OpenAL32Dll)" DestinationFiles="$(OutputPath)\OpenAL32.dll" />
 </Target>
@@ -78,6 +92,6 @@
     <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'" />
     <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
   </ItemGroup>
-  <Copy SourceFiles="@(OpenAL32Dll)" DestinationFiles="$(PublishDir)\OpenAL32.dll"/>
+  <Copy SourceFiles="@(OpenAL32Dll)" DestinationFiles="$(PublishDir)\OpenAL32.dll" />
 </Target>
 </Project>

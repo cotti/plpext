@@ -9,8 +9,6 @@
     Title="Plpext"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Width="800"
-    Height="450"
     x:DataType="vm:MainWindowViewModel"
     Icon="/Assets/plpext.png"
     mc:Ignorable="d">
@@ -24,19 +22,17 @@
     </Window.Styles>
 
     <Design.DataContext>
-        <!--
-            This only sets the DataContext for the previewer in an IDE,
-            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
-        -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
     <Grid
-        Margin="16, 8, 16, 8"
+        Margin="16,8,16,8"
         ColumnDefinitions="300,32,*"
         RowDefinitions="Auto,Auto,*">
-        <Border Grid.Row="0"
-                Grid.Column="0" Classes="Section">
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Classes="Section">
 
             <StackPanel Orientation="Vertical">
                 <Grid
@@ -44,10 +40,11 @@
                     ColumnDefinitions="*"
                     RowDefinitions="*, Auto, Auto">
                     <Label Grid.Row="0" Content="Select your .plp pack file:" />
-                    <StackPanel Height="36"
-                                Grid.Row="1"
-                                Orientation="Horizontal"
-                                Spacing="2">
+                    <StackPanel
+                        Grid.Row="1"
+                        Height="36"
+                        Orientation="Horizontal"
+                        Spacing="2">
                         <TextBox
                             Width="248"
                             HorizontalContentAlignment="Stretch"
@@ -59,10 +56,10 @@
                         </Button>
                     </StackPanel>
                     <Button
-                        Height="38"
                         Grid.Row="2"
+                        Height="38"
+                        Margin="0,4,0,0"
                         HorizontalAlignment="Right"
-                        Margin="0 4 0 0"
                         Classes="Primary"
                         Command="{Binding LoadFileCommand}">
                         <TextBlock VerticalAlignment="Center">Load</TextBlock>
@@ -78,10 +75,10 @@
                         Grid.ColumnSpan="2"
                         Content="Select output folder:" />
                     <StackPanel
-                        Height="36"
                         Grid.Row="1"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
+                        Height="36"
                         Orientation="Horizontal"
                         Spacing="2">
                         <TextBox
@@ -94,19 +91,19 @@
                         </Button>
                     </StackPanel>
                     <Button
-                        HorizontalAlignment="Left"
-                        Height="38"
                         Grid.Row="2"
                         Grid.Column="0"
+                        Height="38"
+                        HorizontalAlignment="Left"
                         Classes="Primary"
                         Command="{Binding ConvertAllFilesCommand}">
-                        <TextBlock  VerticalAlignment="Center">Extract All</TextBlock>
+                        <TextBlock VerticalAlignment="Center">Extract All</TextBlock>
                     </Button>
                     <Button
-                        Height="38"
-                        HorizontalAlignment="Right"
                         Grid.Row="2"
                         Grid.Column="1"
+                        Height="38"
+                        HorizontalAlignment="Right"
                         Classes="Primary"
                         Command="{Binding ConvertSelectedFilesCommand}">
                         <TextBlock VerticalAlignment="Center">Extract Selected</TextBlock>
@@ -117,12 +114,21 @@
 
         </Border>
         <Grid Grid.Row="2" Grid.Column="0">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Height="60" IsVisible="{Binding ShowProgressBar}">
-            <Label Content="{Binding ProgressBarText}"/>
+            <StackPanel
+                Height="60"
+                VerticalAlignment="Center"
+                IsVisible="{Binding ShowProgressBar}"
+                Orientation="Vertical">
+                <Label Content="{Binding ProgressBarText}" />
                 <Border Classes="Section">
-                    <ProgressBar Width="298" Orientation="Horizontal" Height="50" IsIndeterminate="{Binding IsProgressBarIndeterminate}" Value="{Binding ProgressBarValue}" />
+                    <ProgressBar
+                        Width="298"
+                        Height="50"
+                        IsIndeterminate="{Binding IsProgressBarIndeterminate}"
+                        Orientation="Horizontal"
+                        Value="{Binding ProgressBarValue}" />
                 </Border>
-            <Label Content="{Binding ProgressBarDetails}" HorizontalAlignment="Right"/>
+                <Label HorizontalAlignment="Right" Content="{Binding ProgressBarDetails}" />
             </StackPanel>
         </Grid>
 
@@ -136,23 +142,24 @@
                 </StackPanel>
                 <DataGrid
                     MaxHeight="410"
-                    CanUserSortColumns="False"
-                    CanUserResizeColumns="False"
-                    CanUserReorderColumns="False"
                     AreRowDetailsFrozen="True"
-                    HeadersVisibility="None"
                     AutoGenerateColumns="False"
-                    VerticalScrollBarVisibility="Visible"
+                    CanUserReorderColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserSortColumns="False"
+                    HeadersVisibility="None"
                     IsReadOnly="False"
+                    ItemsSource="{Binding AudioFiles}"
                     SelectionMode="Extended"
-                    ItemsSource="{Binding AudioFiles}">
+                    VerticalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Width="36">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Center" />
+                                    <CheckBox
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -167,14 +174,14 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="vm:AudioPlayerViewModel">
                                     <c:AudioPlayerControl
-                                        Margin="0 0 16 0"
+                                        Margin="0,0,16,0"
                                         CurrentDuration="{Binding CurrentDuration}"
-                                        TotalDuration="{Binding TotalDuration}"
-                                        PlayCommand="{Binding PlayCommand}"
-                                        StopCommand="{Binding StopCommand}"
                                         IsPlaying="{Binding IsPlaying}"
+                                        PlayCommand="{Binding PlayCommand}"
                                         PlaybackState="{Binding PlaybackState}"
-                                        Progress="{Binding Progress}" />
+                                        Progress="{Binding Progress}"
+                                        StopCommand="{Binding StopCommand}"
+                                        TotalDuration="{Binding TotalDuration}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

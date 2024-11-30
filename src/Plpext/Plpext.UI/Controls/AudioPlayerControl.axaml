@@ -2,81 +2,102 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Plpext.UI"
-    xmlns:vm="clr-namespace:Plpext.UI.ViewModels"
-    xmlns:cv="clr-namespace:Plpext.UI.Controls.Converters">
-
-    <!--
-        Additional resources
-        Using Control Themes:
-        https://docs.avaloniaui.net/docs/basics/user-interface/styling/control-themes
-        Using Theme Variants:
-        https://docs.avaloniaui.net/docs/guides/styles-and-resources/how-to-use-theme-variants
-    -->
+    xmlns:cv="clr-namespace:Plpext.UI.Controls.Converters"
+    xmlns:vm="clr-namespace:Plpext.UI.ViewModels">
 
     <Design.PreviewWith>
         <Border Padding="10" Background="Brown">
-        <StackPanel Width="200" Spacing="10">
-            <StackPanel Background="{DynamicResource SystemRegionBrush}">
-                <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Stopped" />
-                <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Paused" />
-                <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Playing" />
-                <controls:AudioPlayerControl IsPlaying="False" PlaybackState="Stopped" />
+            <StackPanel Width="200" Spacing="10">
+                <StackPanel Background="{DynamicResource SystemRegionBrush}">
+                    <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Stopped" />
+                    <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Paused" />
+                    <controls:AudioPlayerControl IsPlaying="True" PlaybackState="Playing" />
+                    <controls:AudioPlayerControl IsPlaying="False" PlaybackState="Stopped" />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
         </Border>
     </Design.PreviewWith>
 
-    <ControlTheme x:Key="{x:Type controls:AudioPlayerControl}" TargetType="controls:AudioPlayerControl"
-                  x:DataType="vm:AudioPlayerViewModel">
+    <ControlTheme
+        x:Key="{x:Type controls:AudioPlayerControl}"
+        x:DataType="vm:AudioPlayerViewModel"
+        TargetType="controls:AudioPlayerControl">
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid Name="ButtonGrid" ColumnDefinitions="*,*, Auto">
                     <Grid.Transitions>
                         <Transitions>
-                            <ThicknessTransition Property="Margin" Duration="0:0:0.3" Easing="SineEaseInOut"/>
+                            <ThicknessTransition
+                                Easing="SineEaseInOut"
+                                Property="Margin"
+                                Duration="0:0:0.3" />
                         </Transitions>
                     </Grid.Transitions>
-                    <Button Name="PlayButton" Grid.Column="0" IsEnabled="{TemplateBinding IsEnabled}" 
-                            HorizontalAlignment="Center" Width="32" Height="32" 
-                            Padding="6 6 6 6"
-                            CornerRadius="12"
-                            FontSize="{TemplateBinding FontSize}" 
-                            CommandParameter="{TemplateBinding PlayCommandParameter}" Command="{TemplateBinding PlayCommand}">
+                    <Button
+                        Name="PlayButton"
+                        Grid.Column="0"
+                        Width="32"
+                        Height="32"
+                        Padding="6,6,6,6"
+                        HorizontalAlignment="Center"
+                        Command="{TemplateBinding PlayCommand}"
+                        CommandParameter="{TemplateBinding PlayCommandParameter}"
+                        CornerRadius="12"
+                        FontSize="{TemplateBinding FontSize}"
+                        IsEnabled="{TemplateBinding IsEnabled}">
                         <Path Fill="{Binding $parent[Button].Foreground}">
                             <Path.Data>
-                                <Binding Path="PlaybackState" 
-                                         RelativeSource="{RelativeSource TemplatedParent}"
-                                         Converter="{x:Static cv:PlaybackStateToPathConverter.Instance}"/>
+                                <Binding
+                                    Converter="{x:Static cv:PlaybackStateToPathConverter.Instance}"
+                                    Path="PlaybackState"
+                                    RelativeSource="{RelativeSource TemplatedParent}" />
                             </Path.Data>
                         </Path>
                     </Button>
-                    <Button Name="StopButton" Grid.Column="1" IsEnabled="{TemplateBinding IsEnabled}" IsVisible="{TemplateBinding IsPlaying}" 
-                            HorizontalAlignment="Center" Width="32" Height="32" 
-                            Padding="6 6 6 6"
-                            CornerRadius="12"
-                            FontSize="{TemplateBinding FontSize}" 
-                            CommandParameter="{TemplateBinding StopCommandParameter}" Command="{TemplateBinding StopCommand}">
+                    <Button
+                        Name="StopButton"
+                        Grid.Column="1"
+                        Width="32"
+                        Height="32"
+                        Padding="6,6,6,6"
+                        HorizontalAlignment="Center"
+                        Command="{TemplateBinding StopCommand}"
+                        CommandParameter="{TemplateBinding StopCommandParameter}"
+                        CornerRadius="12"
+                        FontSize="{TemplateBinding FontSize}"
+                        IsEnabled="{TemplateBinding IsEnabled}"
+                        IsVisible="{TemplateBinding IsPlaying}">
                         <Path Data="M2,2 H14 V14 H2 Z" Fill="{Binding $parent[Button].Foreground}" />
                     </Button>
-                    <StackPanel Grid.Column="2" Name="ProgressPanel" Orientation="Vertical">
+                    <StackPanel
+                        Name="ProgressPanel"
+                        Grid.Column="2"
+                        Orientation="Vertical">
                         <StackPanel.Transitions>
                             <Transitions>
-                                <DoubleTransition Property="Width" Duration="0:0:0.3" Easing="SineEaseInOut"/>
-                                <DoubleTransition Property="Opacity" Duration="0:0:0.3"/>
+                                <DoubleTransition
+                                    Easing="SineEaseInOut"
+                                    Property="Width"
+                                    Duration="0:0:0.3" />
+                                <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
                             </Transitions>
                         </StackPanel.Transitions>
-                        <ProgressBar Name="ProgressPanelBar" Value="{TemplateBinding Progress}" HorizontalAlignment="Left" CornerRadius="2"/>
+                        <ProgressBar
+                            Name="ProgressPanelBar"
+                            HorizontalAlignment="Left"
+                            CornerRadius="2"
+                            Value="{TemplateBinding Progress}" />
                         <StackPanel Orientation="Horizontal">
-                            <Label FontSize="{TemplateBinding FontSize}"  Content="{TemplateBinding CurrentDuration}"/>
-                            <Label FontSize="{TemplateBinding FontSize}"  Content="/"/>
-                            <Label FontSize="{TemplateBinding FontSize}"  Content="{TemplateBinding TotalDuration}"/>
+                            <Label Content="{TemplateBinding CurrentDuration}" FontSize="{TemplateBinding FontSize}" />
+                            <Label Content="/" FontSize="{TemplateBinding FontSize}" />
+                            <Label Content="{TemplateBinding TotalDuration}" FontSize="{TemplateBinding FontSize}" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
             </ControlTemplate>
         </Setter>
-        
-      
+
+
     </ControlTheme>
-    
+
 </ResourceDictionary>
