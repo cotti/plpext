@@ -66,10 +66,12 @@
     <None Remove="ViewModels\Mocks\**" />
   </ItemGroup>
 
-<Target Name="CopyOpenALToPublish" AfterTargets="Publish">
-  <Copy SourceFiles="$(MSBuildThisFileDirectory)..\..\Plpext.Core.Windows\bin\x64\Release\net8.0\OpenAL32.dll" 
-        DestinationFolder="$(PublishDir)" />
-  <Message Text="OpenAL32.dll copied to publish directory: $(PublishDir)" Importance="high" />
-</Target>
+<ItemGroup>
+  <Content Include="$(MSBuildThisFileDirectory)..\..\Plpext.Core.Windows\lib\x64\OpenAL32.dll">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    <Link>OpenAL32.dll</Link>
+  </Content>
+</ItemGroup>
 
 </Project>

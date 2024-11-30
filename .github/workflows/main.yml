@@ -23,7 +23,13 @@ jobs:
 
     - name: Install tools
       run: dotnet tool install --global vpk
-    
+
+    - name: Build Core.Windows
+      run: dotnet build src/Plpext/Plpext.Core.Windows/Plpext.Core.Windows.csproj --configuration Release --no-restore
+
+    - name: Build UI
+      run: dotnet build src/Plpext/Plpext.UI/Plpext.UI.csproj --configuration Release --no-restore
+
     - name: Dotnet publish
       run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
 
