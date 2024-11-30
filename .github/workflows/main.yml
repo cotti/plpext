@@ -34,9 +34,13 @@ jobs:
       run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
 
     - name: Vpk pack
-      run: vpk pack --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.0 --packDir=publish -o build/win
+      run: vpk pack --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.${{ github.run_number }} --packDir=publish -o build/win
     
     - name: Upload artifact
       uses: softprops/action-gh-release@v2
       with:
+        tag_name: v1.0.${{ github.run_number }}
+        name: Release v1.0.${{ github.run_number }}
         files: build/win/Plpext-win-Setup.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
