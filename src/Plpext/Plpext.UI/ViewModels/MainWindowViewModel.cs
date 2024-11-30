@@ -55,7 +55,7 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task LoadFile()
     {
         TotalFilesToExtract = await _fileLoaderService.GetFileCountAsync(OriginPath);
-        //AudioFiles.Clear();
+        AudioFiles.Clear();
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             ProgressBarText = "Loading files...";

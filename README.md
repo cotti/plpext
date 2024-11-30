@@ -5,9 +5,13 @@
 
 <h3 align="center">Plpext</h3>
 
-<div align="center"><img src="docs/demo.png" alt="User interface demo" /></div>
+<div align="center"><img src="docs/image.png" alt="User interface demo" /></div>
 
-<div align="center">https://raw.githubusercontent.com/cotti/plpext/docs/demo_video.mp4</div>
+---
+
+https://github.com/user-attachments/assets/b7a2c077-25ee-4412-90a4-4881c0ffa5c2
+
+---
 
 <div align="center">
 
