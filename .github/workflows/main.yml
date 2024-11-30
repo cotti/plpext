@@ -32,7 +32,7 @@ jobs:
 
     - name: Copy OpenAL32.dll
       run: |
-        Copy-Item -Path "src\Plpext\Plpext.Core.Windows\lib\x64\OpenAL32.dll" -Destination "publish\OpenAL32.dll" -Force
+        Copy-Item -Path "src\Plpext.Core.Windows\lib\x64\OpenAL32.dll" -Destination "publish\OpenAL32.dll" -Force
         if (Test-Path "publish\OpenAL32.dll") {
           Write-Host "OpenAL32.dll successfully copied to publish folder"
         } else {
