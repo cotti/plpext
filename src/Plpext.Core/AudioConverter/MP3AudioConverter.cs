@@ -61,7 +61,7 @@ namespace Plpext.Core.AudioConverter
             
             var audioDuration = (double)(pcmData.Length / 2) / mp3Stream.Frequency;
 
-            return new AudioFile() { Name = baseFile.Name, Data = pcmData, Duration = TimeSpan.FromSeconds(audioDuration), Format = AudioFormat.Mono16, Frequency = mp3Stream.Frequency };
+            return new AudioFile() { Name = baseFile.Name, MP3Data = file, Data = pcmData, Duration = TimeSpan.FromSeconds(audioDuration), Format = AudioFormat.Mono16, Frequency = mp3Stream.Frequency };
         }
 
         private static byte[] ResampleToMono(Span<byte> data)

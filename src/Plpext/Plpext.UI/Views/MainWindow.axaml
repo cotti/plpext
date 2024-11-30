@@ -1,0 +1,187 @@
+<Window
+    x:Class="Plpext.UI.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="using:Plpext.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Plpext.UI.ViewModels"
+    Title="Plpext"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Width="800"
+    Height="450"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/plpext.png"
+    mc:Ignorable="d">
+    <Window.Styles>
+        <StyleInclude Source="/Styles/Button.axaml" />
+        <StyleInclude Source="/Styles/AudioPlayerControl.axaml" />
+        <StyleInclude Source="/Styles/Window.axaml" />
+        <StyleInclude Source="/Styles/Border.axaml" />
+        <StyleInclude Source="/Styles/TextBox.axaml" />
+        <StyleInclude Source="/Styles/ProgressBar.axaml" />
+    </Window.Styles>
+
+    <Design.DataContext>
+        <!--
+            This only sets the DataContext for the previewer in an IDE,
+            to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs)
+        -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid
+        Margin="16, 8, 16, 8"
+        ColumnDefinitions="300,32,*"
+        RowDefinitions="Auto,Auto,*">
+        <Border Grid.Row="0"
+                Grid.Column="0" Classes="Section">
+
+            <StackPanel Orientation="Vertical">
+                <Grid
+                    Margin="8"
+                    ColumnDefinitions="*"
+                    RowDefinitions="*, Auto, Auto">
+                    <Label Grid.Row="0" Content="Select your .plp pack file:" />
+                    <StackPanel Height="36"
+                                Grid.Row="1"
+                                Orientation="Horizontal"
+                                Spacing="2">
+                        <TextBox
+                            Width="248"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Center"
+                            Classes="Primary"
+                            Text="{Binding OriginPath}" />
+                        <Button Classes="Primary" Command="{Binding SelectOriginPathCommand}">
+                            <TextBlock Height="24">...</TextBlock>
+                        </Button>
+                    </StackPanel>
+                    <Button
+                        Height="38"
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Margin="0 4 0 0"
+                        Classes="Primary"
+                        Command="{Binding LoadFileCommand}">
+                        <TextBlock VerticalAlignment="Center">Load</TextBlock>
+                    </Button>
+                </Grid>
+                <Grid
+                    Margin="8"
+                    ColumnDefinitions="*, *"
+                    RowDefinitions="*, Auto, Auto">
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Content="Select output folder:" />
+                    <StackPanel
+                        Height="36"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Orientation="Horizontal"
+                        Spacing="2">
+                        <TextBox
+                            Width="248"
+                            VerticalContentAlignment="Center"
+                            Classes="Primary"
+                            Text="{Binding TargetPath}" />
+                        <Button Classes="Primary" Command="{Binding SelectTargetPathCommand}">
+                            <TextBlock Height="24">...</TextBlock>
+                        </Button>
+                    </StackPanel>
+                    <Button
+                        HorizontalAlignment="Left"
+                        Height="38"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Classes="Primary"
+                        Command="{Binding ConvertAllFilesCommand}">
+                        <TextBlock  VerticalAlignment="Center">Extract All</TextBlock>
+                    </Button>
+                    <Button
+                        Height="38"
+                        HorizontalAlignment="Right"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Classes="Primary"
+                        Command="{Binding ConvertSelectedFilesCommand}">
+                        <TextBlock VerticalAlignment="Center">Extract Selected</TextBlock>
+                    </Button>
+                </Grid>
+
+            </StackPanel>
+
+        </Border>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Height="60" IsVisible="{Binding ShowProgressBar}">
+            <Label Content="{Binding ProgressBarText}"/>
+                <Border Classes="Section">
+                    <ProgressBar Width="298" Orientation="Horizontal" Height="50" IsIndeterminate="{Binding IsProgressBarIndeterminate}" Value="{Binding ProgressBarValue}" />
+                </Border>
+            <Label Content="{Binding ProgressBarDetails}" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="2">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Audio Files" />
+                </StackPanel>
+                <DataGrid
+                    MaxHeight="410"
+                    CanUserSortColumns="False"
+                    CanUserResizeColumns="False"
+                    CanUserReorderColumns="False"
+                    AreRowDetailsFrozen="True"
+                    HeadersVisibility="None"
+                    AutoGenerateColumns="False"
+                    VerticalScrollBarVisibility="Visible"
+                    IsReadOnly="False"
+                    SelectionMode="Extended"
+                    ItemsSource="{Binding AudioFiles}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="36">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="vm:AudioPlayerViewModel">
+                                    <Label VerticalAlignment="Center" Content="{Binding Name}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="200" MinWidth="200">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate DataType="vm:AudioPlayerViewModel">
+                                    <c:AudioPlayerControl
+                                        Margin="0 0 16 0"
+                                        CurrentDuration="{Binding CurrentDuration}"
+                                        TotalDuration="{Binding TotalDuration}"
+                                        PlayCommand="{Binding PlayCommand}"
+                                        StopCommand="{Binding StopCommand}"
+                                        IsPlaying="{Binding IsPlaying}"
+                                        PlaybackState="{Binding PlaybackState}"
+                                        Progress="{Binding Progress}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</Window>

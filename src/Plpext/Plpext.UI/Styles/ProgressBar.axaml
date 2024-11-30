@@ -1,0 +1,14 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <ProgressBar IsIndeterminate="True"></ProgressBar>
+        </Border>
+    </Design.PreviewWith>
+
+    <Style Selector="ProgressBar">
+        <Setter Property="Background" Value="{StaticResource SecondaryDark}"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryLightest}"/>
+        <Setter Property="CornerRadius" Value="0"/>
+    </Style>
+</Styles>

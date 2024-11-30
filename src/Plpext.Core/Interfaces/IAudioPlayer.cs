@@ -9,7 +9,7 @@ namespace Plpext.Core.Interfaces;
 
 public interface IAudioPlayer
 {
-    Task<bool> InitAudioPlayerAsync(AudioFile input, CancellationToken cancellationToken);
+    Task<bool> InitAudioPlayerAsync(AudioFile input, bool autoStart, CancellationToken cancellationToken);
     void Resume();
     void Pause();
     void Stop();

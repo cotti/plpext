@@ -1,0 +1,36 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Install tools
+      run: dotnet tool install --global vpk
+    
+    - name: Dotnet publish
+      run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
+
+    - name: Vpk pack
+      run: vpk pack --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.0 --packDir=publish -o build/win
+    
+    - name: Upload artifact
+      uses: softprops/action-gh-release@v2
+      with:
+        files: build/win/Plpext-win-Setup.exe

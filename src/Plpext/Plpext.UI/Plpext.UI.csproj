@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <Platforms>x86;x64</Platforms>
+    <AssemblyName>Plpext</AssemblyName>
+    <SelfContained>true</SelfContained>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+
+  
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+    <AvaloniaResource Remove="ViewModels\Mocks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.2" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.2" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.2">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageReference Include="Velopack" Version="0.0.942" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Plpext.Core\Plpext.Core.csproj" />
+    <ProjectReference Include="..\..\Plpext.Core.Windows\Plpext.Core.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ViewModels\Mocks\MockAudioPlayerViewModel.cs" />
+    <Compile Remove="ViewModels\Mocks\**" />
+    <Compile Remove="ViewLocator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaXaml Remove="ViewModels\Mocks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ViewModels\Mocks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Remove="ViewModels\Mocks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ViewModels\Mocks\**" />
+  </ItemGroup>
+
+<Target Name="CopyOpenALToPublish" AfterTargets="Publish">
+  <Copy SourceFiles="$(MSBuildThisFileDirectory)..\..\Plpext.Core.Windows\bin\x64\Release\net8.0\OpenAL32.dll" 
+        DestinationFolder="$(PublishDir)" />
+  <Message Text="OpenAL32.dll copied to publish directory: $(PublishDir)" Importance="high" />
+</Target>
+
+</Project>

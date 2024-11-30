@@ -26,23 +26,24 @@ public sealed class AudioPlayer : IAudioPlayer, IDisposable
 
     public PlaybackState State { get; private set; } = PlaybackState.Stopped;
 
-    public async Task<bool> InitAudioPlayerAsync(AudioFile input, CancellationToken cancellationToken)
+    public async Task<bool> InitAudioPlayerAsync(AudioFile input, bool autoStart, CancellationToken cancellationToken)
     {
         _audioFile = input;
-        
 
         _playbackCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         try
         {
             int bufferId = AL.GenBuffer();
             int sourceId = AL.GenSource();
-
+            
             _currentBufferId = bufferId;
             _currentSourceId = sourceId;
 
             AL.BufferData(bufferId, ALFormat.Mono16, input.Data.Span, input.Frequency);
             AL.Source(sourceId, ALSourcei.Buffer, bufferId);
-            return await Start();
+            if(autoStart)
+                return await Start();
+            return true;
         }
         catch (Exception ex)
         {
