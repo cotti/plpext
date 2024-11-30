@@ -43,4 +43,4 @@ jobs:
         name: Release v1.0.${{ github.run_number }}
         files: build/win/Plpext-win-Setup.exe
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
