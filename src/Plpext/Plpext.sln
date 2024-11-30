@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plpext.UI", "Plpext.UI\Plpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plpext.Core", "..\Plpext.Core\Plpext.Core.csproj", "{2A0B3CBC-C79F-4B19-93AE-BCEEE44BDAD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plpext.Core.Windows", "..\Plpext.Core.Windows\Plpext.Core.Windows.csproj", "{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +41,6 @@ Global
 		{2A0B3CBC-C79F-4B19-93AE-BCEEE44BDAD2}.Release|x64.Build.0 = Release|x64
 		{2A0B3CBC-C79F-4B19-93AE-BCEEE44BDAD2}.Release|x86.ActiveCfg = Release|x86
 		{2A0B3CBC-C79F-4B19-93AE-BCEEE44BDAD2}.Release|x86.Build.0 = Release|x86
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|x64.ActiveCfg = Debug|x64
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|x64.Build.0 = Debug|x64
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|x86.ActiveCfg = Debug|x86
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Debug|x86.Build.0 = Debug|x86
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|x64.ActiveCfg = Release|x64
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|x64.Build.0 = Release|x64
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|x86.ActiveCfg = Release|x86
-		{CEF95E1F-8E07-4B32-A5D9-EE980AF5FBC4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

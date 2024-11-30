@@ -7,7 +7,7 @@
 
 <div align="center"><img src="docs/demo.png" alt="User interface demo" /></div>
 
-<div align="center">[![Demo](docs/demo.png)](docs/demo_video.mp4)</div>
+<div align="center">https://raw.githubusercontent.com/cotti/plpext/docs/demo_video.mp4</div>
 
 <div align="center">
 
@@ -35,6 +35,7 @@
 - [🕸️ Prerequisites](#️-prerequisites)
 - [⛏️ Built Using ](#️-built-using-)
 - [✍️ Authors ](#️-authors-)
+- [Acknowledgements](#acknowledgements)
 
 ## 🧐 About <a name = "about"></a>
 
@@ -67,3 +68,9 @@ Hopefully that'll be it. Releases should be made self-contained.
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@cotti](https://github.com/cotti) | [cotti.com.br](https://cotti.com.br)
+
+## Acknowledgements
+
+This project uses OpenAL-soft, which is licensed under the LGPLv2.
+
+You can obtain a copy of the LGPLv2 and the source code to the DLL by heading to the fork used: https://github.com/kcat/openal-soft
