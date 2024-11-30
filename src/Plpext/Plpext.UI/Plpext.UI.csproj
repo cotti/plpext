@@ -81,10 +81,11 @@
 
 <Target Name="PostBuild" AfterTargets="PostBuildEvent">
   <ItemGroup>
-    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86' or '$(PlatformTarget)' == 'x86'" />
-    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64' or '$(PlatformTarget)' == 'x64'" />
+    <OpenAL32Dll_x86 Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'" />
+    <OpenAL32Dll_x64 Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
   </ItemGroup>
-  <Copy SourceFiles="@(OpenAL32Dll)" DestinationFiles="$(OutputPath)\OpenAL32.dll" />
+  <Copy SourceFiles="@(OpenAL32Dll_x86)" DestinationFiles="$(OutputPath)\OpenAL32_x86.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'" />
+  <Copy SourceFiles="@(OpenAL32Dll_x64)" DestinationFiles="$(OutputPath)\OpenAL32_x64.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
 </Target>
 
 <Target Name="PublishOpenAL" AfterTargets="Publish">
