@@ -7,7 +7,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
@@ -30,17 +30,8 @@ jobs:
     - name: Dotnet publish
       run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
 
-    - name: Copy OpenAL32.dll
-      run: |
-        Copy-Item -Path "src\Plpext.Core.Windows\lib\x64\OpenAL32.dll" -Destination "publish\OpenAL32.dll" -Force
-        if (Test-Path "publish\OpenAL32.dll") {
-          Write-Host "OpenAL32.dll successfully copied to publish folder"
-        } else {
-          Write-Error "Failed to copy OpenAL32.dll"
-          exit 1
-        }
     - name: Vpk pack
-      run: vpk pack --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.${{ github.run_number }} --packDir=publish -o build/win
+      run: vpk pack --packAuthors="Felipe Cotti" --packTitle=Plpext -i build/plpext.ico -s docs/plpext.png  --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.${{ github.run_number }} --packDir=publish -o build/win
     
     - name: Upload artifact
       uses: softprops/action-gh-release@v2

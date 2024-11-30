@@ -55,13 +55,14 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task LoadFile()
     {
         TotalFilesToExtract = await _fileLoaderService.GetFileCountAsync(OriginPath);
-
+        //AudioFiles.Clear();
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             ProgressBarText = "Loading files...";
             ProgressBarValue = 0 / (double)TotalFilesToExtract * 100;
             ShowProgressBar = true;
             IsProgressBarIndeterminate = false;
+            FilesReady = 0;
         });
 
         await foreach (var item in _fileLoaderService.LoadFilesAsync())

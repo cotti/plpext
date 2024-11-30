@@ -5,6 +5,10 @@
 
 <h3 align="center">Plpext</h3>
 
+<div align="center"><img src="docs/demo.png" alt="User interface demo" /></div>
+
+<div align="center">[![Demo](docs/demo.png)](docs/demo_video.mp4)</div>
+
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
@@ -38,8 +42,6 @@ Plpext (*good luck spelling that any way you want*) is a simple application to r
 
 It is also a rewrite of the very aptly-named *MessengerPlusSoundBankExtractor* with an improved project design. The `plpext-core` solution now contains everything related to file manipulation and playback, leaving the front-end fully free to do as it wishes.
 
-I am also using a less-problematic implementation of OpenAL, which hopefully will make distribution a whole lot easier.
-
 ## 📑 Documentation <a name = "documentation"></a>
 
 [Comments and general documentation/musings on the project](docs/comments.md)
@@ -50,16 +52,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## 🕸️ Prerequisites
 
-Building:
+Building and running locally:
 - .NET 8.0
 
 Hopefully that'll be it. Releases should be made self-contained.
-
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [.NET](https://dot.net/) - Core
 - [AvaloniaUI](https://avaloniaui.net/) - GUI
+- [OpenAL-soft](https://github.com/kcat/openal-soft) - Audio library
+- [Velopack](https://velopack.io) - Packaging
 
 ## ✍️ Authors <a name = "authors"></a>
 
