@@ -66,12 +66,4 @@
     <None Remove="ViewModels\Mocks\**" />
   </ItemGroup>
 
-<ItemGroup>
-  <Content Include="$(MSBuildThisFileDirectory)..\..\Plpext.Core.Windows\lib\x64\OpenAL32.dll">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    <Link>OpenAL32.dll</Link>
-  </Content>
-</ItemGroup>
-
 </Project>
