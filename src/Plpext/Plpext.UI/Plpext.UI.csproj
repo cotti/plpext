@@ -89,7 +89,6 @@
 
 <Target Name="PublishOpenAL" AfterTargets="Publish">
   <ItemGroup>
-    <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x86\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x86'" />
     <OpenAL32Dll Include="$(MSBuildProjectDirectory)\..\..\..\deps\win\x64\OpenAL32.dll" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
   </ItemGroup>
   <Copy SourceFiles="@(OpenAL32Dll)" DestinationFiles="$(PublishDir)\OpenAL32.dll" />
