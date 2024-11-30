@@ -10,3 +10,7 @@ artifacts/
 *DS_Store
 *.sln.ide
 /build/win
+.idea/
+.vs/
+Releases/
+publish/
