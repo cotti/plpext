@@ -2,9 +2,8 @@ name: CI/CD
 
 on:
   push:
-    branches:
-      - main
-      - '*'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build-windows:
@@ -31,13 +30,15 @@ jobs:
       run: dotnet publish src/Plpext/Plpext.UI/Plpext.UI.csproj -c Release -r win-x64 -o publish
 
     - name: Vpk pack
-      run: vpk pack --packAuthors="Felipe Cotti" --packTitle=Plpext -i build/plpext.ico -s docs/plpext.png  --mainExe=Plpext.exe --packId=Plpext --packVersion=1.0.${{ github.run_number }} --packDir=publish -o build/win
+      run: vpk pack --packAuthors="Felipe Cotti" --packTitle=Plpext -i build/plpext.ico -s docs/plpext.png  --mainExe=Plpext.exe --packId=Plpext --packVersion=${{ github.ref_name }} --packDir=publish -o build/win
     
     - name: Upload artifact
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.${{ github.run_number }}
-        name: Release v1.0.${{ github.run_number }}
+        draft: false
+        prerelease: false
+        tag_name: ${{ github.ref_name }}
+        name: Release ${{ github.ref_name }}
         files: build/win/Plpext-win-Setup.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

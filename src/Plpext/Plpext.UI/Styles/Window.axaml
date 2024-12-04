@@ -1,12 +1,11 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Design.PreviewWith>
-    </Design.PreviewWith>
-    
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith />
+
     <Style Selector="Window">
-        <Setter Property="Background" Value="{StaticResource PrimaryBackground}"/>
-        <Setter Property="CanResize" Value="False"/>
-        <Setter Property="Width" Value="800"/>
-        <Setter Property="Height" Value="450"/>
+        <Setter Property="Background" Value="{StaticResource PrimaryBackground}" />
+        <Setter Property="CanResize" Value="False" />
+        <Setter Property="Width" Value="800" />
+        <Setter Property="Height" Value="450" />
+        <Setter Property="WindowStartupLocation" Value="CenterScreen" />
     </Style>
 </Styles>
